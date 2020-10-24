@@ -2,10 +2,15 @@ use bitsh::*;
 
 fn main() {
     let from = [0x3f_u8, 0];
-    let mut to = [0u8; 2];
+    let mut buf = [0u8; 2];
 
-    pack_bits(&from, &mut to, 2, 2);
+    println!("try le i16");
+    pack_le_i16(3, &mut buf, 7, 4);
+    println!("unpack_le_i16; {}", unpack_le_i16(&buf, 7, 4));
+    println!("buf: {:?}", buf);
 
-    println!("from: {:02x}", from[0]);
-    println!("to: {:?}", to);
+    println!("try be i16");
+    pack_be_i16(3, &mut buf, 0, 4);
+    println!("unpack_be_i16; {}", unpack_be_i16(&buf, 0, 4));
+    println!("buf: {:?}", buf);
 }
