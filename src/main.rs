@@ -2,16 +2,21 @@ use bitsh::*;
 
 fn main() {
     let mut buf = [0u8; 2];
-    pack_le_u16(0x3, &mut buf, 7, 4);
+    (0x3_u16).pack_le_bits(&mut buf, 7, 4);
     print_buf(&buf);
-    pack_le_u16(0xf, &mut buf, 3, 4);
+    (0xf_u16).pack_le_bits(&mut buf, 3, 4);
     print_buf(&buf);
-    pack_le_i16(-1, &mut buf, 8, 8);
+    (-1_i16).pack_le_bits(&mut buf, 8, 8);
     print_buf(&buf);
-    println!("unpack u16 7-11: {:04x}", unpack_le_u16(&buf, 7, 4));
-    println!("unpack u16 3-7: {:04x}", unpack_le_u16(&buf, 3, 4));
-    println!("unpack i16 8-16: {}", unpack_le_i16(&buf, 8, 8));
-    println!("unpack u16 *: {:04x}", unpack_le_u16(&buf, 0, 16));
+    println!("unpack u16 7-11: {:04x}", u16::unpack_le_bits(&buf, 7, 4));
+    println!("unpack u16 3-7: {:04x}", u16::unpack_le_bits(&buf, 3, 4));
+    println!("unpack i16 8-16: {}", i16::unpack_le_bits(&buf, 8, 8));
+    println!("unpack u16 *: {:04x}", u16::unpack_le_bits(&buf, 0, 16));
+}
+
+struct Lab {
+    some_value: u16,
+    other_value: i32,
 }
 
 fn print_buf(buf: &[u8]) {
