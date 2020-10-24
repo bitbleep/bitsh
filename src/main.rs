@@ -1,16 +1,23 @@
 use bitsh::*;
 
 fn main() {
-    let from = [0x3f_u8, 0];
     let mut buf = [0u8; 2];
+    pack_le_u16(0x3, &mut buf, 7, 4);
+    print_buf(&buf);
+    pack_le_u16(0xf, &mut buf, 3, 4);
+    print_buf(&buf);
+    pack_le_i16(-1, &mut buf, 8, 8);
+    print_buf(&buf);
+    println!("unpack u16 7-11: {:04x}", unpack_le_u16(&buf, 7, 4));
+    println!("unpack u16 3-7: {:04x}", unpack_le_u16(&buf, 3, 4));
+    println!("unpack i16 8-16: {}", unpack_le_i16(&buf, 8, 8));
+    println!("unpack u16 *: {:04x}", unpack_le_u16(&buf, 0, 16));
+}
 
-    println!("try le i16");
-    pack_le_i16(3, &mut buf, 7, 4);
-    println!("unpack_le_i16; {}", unpack_le_i16(&buf, 7, 4));
-    println!("buf: {:?}", buf);
-
-    println!("try be i16");
-    pack_be_i16(3, &mut buf, 0, 4);
-    println!("unpack_be_i16; {}", unpack_be_i16(&buf, 0, 4));
-    println!("buf: {:?}", buf);
+fn print_buf(buf: &[u8]) {
+    print!("buf: ");
+    for byte in buf {
+        print!("{:02x} ", byte);
+    }
+    println!();
 }
