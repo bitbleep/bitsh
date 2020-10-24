@@ -14,11 +14,6 @@ fn main() {
     println!("unpack u16 *: {:04x}", u16::unpack_le_bits(&buf, 0, 16));
 }
 
-struct Lab {
-    some_value: u16,
-    other_value: i32,
-}
-
 fn print_buf(buf: &[u8]) {
     print!("buf: ");
     for byte in buf {
