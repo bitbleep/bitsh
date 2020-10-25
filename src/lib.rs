@@ -26,9 +26,12 @@ fn pack_bits(from: &[u8], to: &mut [u8], start_bit: usize, num_bits: usize) {
         let to_shift = to_bit % 8;
         let available = 8 - from_shift;
         let space = 8 - to_shift;
+        let bit_space = num_bits - from_bit;
+        let space = if space < bit_space { space } else { bit_space };
         let take = if space < available { space } else { available };
         let copied_bits = from[from_bit / 8] >> from_shift;
-        to[to_bit / 8] |= copied_bits << (to_bit % 8);
+        let mask = (u16::pow(2, take as u32) - 1) as u8;
+        to[to_bit / 8] |= (copied_bits & mask) << (to_bit % 8);
         from_bit += take;
     }
 }
