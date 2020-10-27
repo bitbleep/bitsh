@@ -17,7 +17,7 @@ pub trait Pack {
     fn unpack_be_bits(from: &[u8], start_bit: usize, num_bits: usize) -> Self;
 }
 
-#[inline(always)]
+#[inline(never)]
 fn pack_bits(from: &[u8], to: &mut [u8], start_bit: usize, num_bits: usize) {
     let mut from_bit: usize = 0;
     while from_bit < num_bits {
@@ -36,7 +36,7 @@ fn pack_bits(from: &[u8], to: &mut [u8], start_bit: usize, num_bits: usize) {
     }
 }
 
-#[inline(always)]
+#[inline(never)]
 fn unpack_bits(from: &[u8], to: &mut [u8], start_bit: usize, num_bits: usize, packing: Packing) {
     let init_value = match packing {
         Packing::SignedLittleEndian | Packing::SignedBigEndian => {
