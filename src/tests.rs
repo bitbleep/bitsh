@@ -47,6 +47,15 @@ fn u16_pack_with_offset() {
 }
 
 #[test]
+fn u16_little_endian_pack_and_unpack_with_offset() {
+    let mut data = [0u8; 8];
+    let value = 0x123;
+    value.pack_le_bits(&mut data, 11, 13);
+    let unpacked_value = u16::unpack_le_bits(&mut data, 11, 13);
+    assert_eq!(value, unpacked_value);
+}
+
+#[test]
 fn u16_little_endian_pack_and_unpack() {
     let mut data = [0u8; 2];
     let value = 0x1234;
