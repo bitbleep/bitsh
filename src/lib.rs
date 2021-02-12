@@ -57,6 +57,8 @@ fn unpack_bits(from: &[u8], to: &mut [u8], start_bit: usize, num_bits: usize, pa
         let from_shift = from_bit % 8;
         let available = 8 - from_shift;
         let space = num_bits - to_bit;
+        let bit_space = 8 - to_shift;
+        let space = if space < bit_space { space } else { bit_space };
         let take = if space < available { space } else { available };
         let copied_bits = from[from_bit / 8] >> from_shift;
         let mut mask = 0xff_u8;
